@@ -1,0 +1,100 @@
+package co.nyzo.verifier.util;
+
+public class ByteUtil {
+
+    public static String arrayAsStringNoDashes(byte[] array) {
+
+        return arrayAsStringNoDashes(array, 0, array == null ? 0 : array.length);
+    }
+
+    public static String arrayAsStringNoDashes(byte[] array, int offset, int length) {
+
+        StringBuilder result = new StringBuilder();
+        if (array == null) {
+            result.append("(null)");
+        } else {
+            try {
+                for (int i = offset; i < offset + length; i++) {
+                    result.append(String.format("%02x", array[i]));
+                }
+            } catch (Exception ignored) { }
+        }
+
+        return result.toString();
+    }
+
+    public static String arrayAsStringWithDashes(byte[] array) {
+
+        StringBuilder result = new StringBuilder();
+        if (array == null) {
+            result.append("(null)");
+        } else {
+            try {
+                for (int i = 0; i < array.length; i++) {
+                    if (i % 8 == 7 && i < array.length - 1) {
+                        result.append(String.format("%02x-", array[i]));
+                    } else {
+                        result.append(String.format("%02x", array[i]));
+                    }
+                }
+            } catch (Exception ignored) { }
+        }
+
+        return result.toString();
+    }
+
+    public static boolean arraysAreEqual(byte[] array1, byte[] array2) {
+
+        boolean arraysAreEqual;
+        if (array1 == null || array2 == null) {
+            arraysAreEqual = array1 == null && array2 == null;
+        } else {
+            arraysAreEqual = array1.length == array2.length;
+            for (int i = 0; i < array1.length && arraysAreEqual; i++) {
+                if (array1[i] != array2[i]) {
+                    arraysAreEqual = false;
+                }
+            }
+        }
+
+        return arraysAreEqual;
+    }
+
+    public static byte[] byteArrayFromHexString(String string, int length) {
+
+        byte[] result = new byte[length];
+        char[] characters = string.toLowerCase().toCharArray();
+        int resultIndex = 0;
+        int characterIndex = 0;
+        char previousCharacter = 0;
+
+        try {
+            while (resultIndex < length && characterIndex < characters.length) {
+                char character = characters[characterIndex++];
+                if ((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f')) {
+                    if (previousCharacter == 0) {
+                        previousCharacter = character;
+                    } else {
+                        result[resultIndex++] = (byte) Integer.parseInt(previousCharacter + "" + character, 16);
+                        previousCharacter = 0;
+                    }
+                }
+            }
+        } catch (Exception ignored) { }
+
+        return result;
+    }
+
+    public static boolean isAllZeros(byte[] array) {
+        boolean isAllZeros = true;
+        if (array != null) {
+            for (int i = 0; i < array.length && isAllZeros; i++) {
+                if (array[i] != 0) {
+                    isAllZeros = false;
+                }
+            }
+        }
+
+        return isAllZeros;
+    }
+}
