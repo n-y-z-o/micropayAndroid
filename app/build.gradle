@@ -10,8 +10,8 @@ android {
         applicationId "co.nyzo.mobile"
         minSdkVersion 22  // no higher than 22, due to device support as of 2020-11-05
         targetSdkVersion 30
-        versionCode 1
-        versionName "1"
+        versionCode 2
+        versionName "2"
     }
 
     buildTypes {
