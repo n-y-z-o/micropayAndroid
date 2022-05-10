@@ -1,4 +1,6 @@
-# Nyzo Micropay for Android
+# (DEPRECATED) Nyzo Micropay for Android
+
+## This has been eliminated in favor of using the Chrome extension on all platforms.
 
 This is the source for the Nyzo Micropay Android app.
 
